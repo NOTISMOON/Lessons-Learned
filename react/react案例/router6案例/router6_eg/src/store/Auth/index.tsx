@@ -1,8 +1,8 @@
-import  {createSlice} from '@reduxjs/toolkit'
-import { useNavigate } from 'react-router-dom'
- const AuthSlice=createSlice({
+import  {createAsyncThunk, createSlice, type PayloadAction} from '@reduxjs/toolkit'
+
+const AuthSlice=createSlice({
     name:'auth',
-    initialState:{
+    initialState: {
         token:'',
         isLogin:false
     },
@@ -15,25 +15,47 @@ import { useNavigate } from 'react-router-dom'
         state.token=''
         state.isLogin=false
         }
-    }
+    },
+    extraReducers(builder) {
+        builder.addCase(toLogin.pending, (state) => {
+            state.isLogin=false
+            console.log('登录中')
+        })
+        builder.addCase(toLogin.rejected, (state) => {
+            state.isLogin=false
+            console.log('登录失败')
+        })
+        builder.addCase(toLogin.fulfilled, (state, action) => {
+            state.token=action.payload
+            state.isLogin=true
+            console.log('登录成功')
+        })
+    },
 })
 
-export const {setToken,removeToken}=AuthSlice.actions
-export const toLogin =()=> async(dispatch: any)=>{
-    //模拟登录接口
-    confirm('登录')
-    const loginApi=()=>{
+export const toLogin=createAsyncThunk('auth/login',async()=>{
+     const loginApi=()=>{
         return new Promise((resolve,reject)=>{
             setTimeout(()=>{
                 resolve('123456')
             },1000)
         })
     }
-   const res =await loginApi()
-    dispatch(setToken(res))
-    const navigate= useNavigate()
-     navigate('/app')
-     console.log(res)
-}   
-
+    const res = await loginApi()
+    return res
+})
+export const {setToken,removeToken}=AuthSlice.actions
+// export const toLogin =()=> async(dispatch: any)=>{
+//     //模拟登录接口
+//     const loginApi=()=>{
+//         return new Promise((resolve,reject)=>{
+//             setTimeout(()=>{
+//                 resolve('123456')
+//             },1000)
+//         })
+//     }
+//    const res =await loginApi()
+//     dispatch(setToken(res))
+//      console.log(res)
+// }
 export default AuthSlice.reducer

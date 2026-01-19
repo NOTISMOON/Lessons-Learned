@@ -12,7 +12,7 @@ import Login from './page/login/index.tsx'
 import { Auth } from './components/Auth/index.tsx'
 
 const route=createBrowserRouter(createRoutesFromElements(<>  
-   <Route path="/app" element={ <Auth>
+   <Route path="/" element={ <Auth>
             <App />
           </Auth>} >
       <Route path="about" element={<About />} />
