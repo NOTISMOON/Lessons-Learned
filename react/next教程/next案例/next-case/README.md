@@ -27,7 +27,7 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+xxxxxxxxxx // eslint.config.jsimport reactX from 'eslint-plugin-react-x'import reactDom from 'eslint-plugin-react-dom'​export default defineConfig([  globalIgnores(['dist']),  {    files: ['**/*.{ts,tsx}'],    extends: [      // Other configs...      // Enable lint rules for React      reactX.configs['recommended-typescript'],      // Enable lint rules for React DOM      reactDom.configs.recommended,    ],    languageOptions: {      parserOptions: {        project: ['./tsconfig.node.json', './tsconfig.app.json'],        tsconfigRootDir: import.meta.dirname,      },      // other options...    },  },])js
 
 ## Deploy on Vercel
 
